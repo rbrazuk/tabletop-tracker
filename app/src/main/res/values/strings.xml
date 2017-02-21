@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Tabletop-Tracker</string>
+
+    <!-- MainActivity -->
+    <string name="recent_plays">Recent Plays</string>
+    <string name="add_play">Add Play</string>
+
 </resources>

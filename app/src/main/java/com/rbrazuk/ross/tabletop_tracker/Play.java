@@ -2,10 +2,6 @@ package com.rbrazuk.ross.tabletop_tracker;
 
 import java.util.Date;
 
-/**
- * Created by Ross on 2/21/2017.
- */
-
 public class Play {
 
     private Game mGame;

@@ -25,4 +25,8 @@ public class Game {
     public void setPlays(List<Play> plays) {
         mPlays = plays;
     }
+
+    public int getPlayCount() {
+        return mPlays.size();
+    }
 }
