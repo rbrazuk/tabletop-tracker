@@ -1,4 +1,6 @@
-package com.rbrazuk.ross.tabletop_tracker;
+package com.rbrazuk.ross.tabletop_tracker.Models;
+
+import com.rbrazuk.ross.tabletop_tracker.Models.Game;
 
 import java.util.Date;
 

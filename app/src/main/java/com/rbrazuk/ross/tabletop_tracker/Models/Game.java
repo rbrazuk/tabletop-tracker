@@ -1,4 +1,4 @@
-package com.rbrazuk.ross.tabletop_tracker;
+package com.rbrazuk.ross.tabletop_tracker.Models;
 
 import java.util.List;
 
