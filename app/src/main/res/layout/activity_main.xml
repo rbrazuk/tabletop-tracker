@@ -8,42 +8,7 @@
     android:layout_height="match_parent"
     tools:context="com.rbrazuk.ross.tabletop_tracker.MainActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
-        android:layout_weight="8">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Recent Plays"
-            android:textSize="18sp"/>
-
-        <LinearLayout
-            android:id="@+id/ll_recent_plays"
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="PlaceholderGame"/>
-
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Add Play"/>
-    </LinearLayout>
 
 
 </LinearLayout>
