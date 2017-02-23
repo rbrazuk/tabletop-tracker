@@ -12,6 +12,12 @@ public class Play {
 
     public Play() {}
 
+    public Play(Game game, Date date, String[] players) {
+        mGame = game;
+        mDate = date;
+        mPlayers = players;
+    }
+
     public Game getGame() {
         return mGame;
     }

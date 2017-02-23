@@ -6,8 +6,17 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.rbrazuk.ross.tabletop_tracker.Models.Play;
 import com.rbrazuk.ross.tabletop_tracker.R;
+import com.rbrazuk.ross.tabletop_tracker.Utils;
+
+import java.util.List;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
@@ -18,6 +27,8 @@ public class HomeFragment extends Fragment {
 
     private String title;
     private int pageNumber;
+
+    @BindView(R.id.ll_recent_plays_container) LinearLayout mPlaysContainer;
 
     public static HomeFragment newInstance() {
         HomeFragment homeFragment = new HomeFragment();
@@ -35,12 +46,26 @@ public class HomeFragment extends Fragment {
 
         title = getArguments().getString(PAGE_TITLE_KEY);
         pageNumber = getArguments().getInt(PAGE_NUMBER_KEY);
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
+
+        ButterKnife.bind(this, view);
+
+        List<Play> playsList = Utils.getDummyPlaysList();
+
+        for (Play play : playsList) {
+            TextView textView = new TextView(getContext());
+
+            textView.append(play.getGame().toString());
+
+            mPlaysContainer.addView(textView);
+        }
+
         return view;
     }
 }

@@ -10,6 +10,11 @@ public class Game {
     public Game() {
     }
 
+    public Game(String title, List<Play> plays) {
+        mTitle = title;
+        mPlays = plays;
+    }
+
     public String getTitle() {
         return mTitle;
     }
@@ -28,5 +33,10 @@ public class Game {
 
     public int getPlayCount() {
         return mPlays.size();
+    }
+
+    @Override
+    public String toString() {
+        return this.getTitle();
     }
 }
