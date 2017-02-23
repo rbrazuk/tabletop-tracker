@@ -2,17 +2,19 @@ package com.rbrazuk.ross.tabletop_tracker.Models;
 
 import com.rbrazuk.ross.tabletop_tracker.Models.Game;
 
+import org.joda.time.LocalDate;
+
 import java.util.Date;
 
 public class Play {
 
     private Game mGame;
-    private Date mDate;
+    private LocalDate mDate;
     private String[] mPlayers;
 
     public Play() {}
 
-    public Play(Game game, Date date, String[] players) {
+    public Play(Game game, LocalDate date, String[] players) {
         mGame = game;
         mDate = date;
         mPlayers = players;
@@ -26,11 +28,11 @@ public class Play {
         mGame = game;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return mDate;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         mDate = date;
     }
 
@@ -40,5 +42,10 @@ public class Play {
 
     public void setPlayers(String[] players) {
         mPlayers = players;
+    }
+
+    @Override
+    public String toString() {
+        return this.getDate().toString() + " - " + this.getGame().toString();
     }
 }

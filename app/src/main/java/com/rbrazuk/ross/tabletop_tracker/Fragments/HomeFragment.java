@@ -46,7 +46,6 @@ public class HomeFragment extends Fragment {
 
         title = getArguments().getString(PAGE_TITLE_KEY);
         pageNumber = getArguments().getInt(PAGE_NUMBER_KEY);
-
     }
 
     @Nullable
@@ -61,7 +60,7 @@ public class HomeFragment extends Fragment {
         for (Play play : playsList) {
             TextView textView = new TextView(getContext());
 
-            textView.append(play.getGame().toString());
+            textView.append(play.toString());
 
             mPlaysContainer.addView(textView);
         }
