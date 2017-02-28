@@ -1,4 +1,4 @@
-package com.rbrazuk.ross.tabletop_tracker.Services;
+package com.rbrazuk.ross.tabletop_tracker;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -6,9 +6,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
-public class DatabaseService extends SQLiteOpenHelper {
+public class DataBaseHelper extends SQLiteOpenHelper {
 
-    private static DatabaseService sInstance;
+    private static DataBaseHelper sInstance;
 
     private static final String DATABASE_NAME = "playsDatabase";
     private static final int DATABASE_VERSION = 1;
@@ -42,7 +42,7 @@ public class DatabaseService extends SQLiteOpenHelper {
     private static final String KEY_PLAY_PLAYER_PLAY_ID = "playPlayerPlayId";
     private static final String KEY_PLAY_PLAYER_PLAYER_ID = "playPlayerPlayerId";
 
-    private DatabaseService(Context context) {
+    private DataBaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -104,9 +104,9 @@ public class DatabaseService extends SQLiteOpenHelper {
         }
     }
 
-    public static synchronized DatabaseService getInstance(Context context) {
+    public static synchronized DataBaseHelper getInstance(Context context) {
         if (sInstance == null) {
-            sInstance =  new DatabaseService(context.getApplicationContext());
+            sInstance =  new DataBaseHelper(context.getApplicationContext());
         }
         return sInstance;
     }
