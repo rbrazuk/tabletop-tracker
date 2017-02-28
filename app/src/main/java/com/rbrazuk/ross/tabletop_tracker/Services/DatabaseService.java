@@ -27,8 +27,12 @@ public class DatabaseService extends SQLiteOpenHelper {
 
 
     // GamePlayer Junction Table Columns
+    private static final String KEY_GAMEPLAYER_GAME_ID = "gamePlayerGameId";
+    private static final String KEY_GAMEPLAYER_PLAYER_ID = "gamePlayerPlayerId";
 
     // PlayPlayer Junction Table Columns
+    private static final String KEY_PLAYPLAYER_PLAY_ID = "playPlayerPlayId";
+    private static final String KEY_PLAY_PLAYER_PLAYER_ID = "playPlayerPlayerId";
 
     public DatabaseService(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
