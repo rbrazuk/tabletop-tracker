@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.rbrazuk.ross.tabletop_tracker.Models.Play;
 import com.rbrazuk.ross.tabletop_tracker.R;
+import com.rbrazuk.ross.tabletop_tracker.Services.SqlService;
 import com.rbrazuk.ross.tabletop_tracker.Utils;
 
 import java.util.List;
@@ -55,7 +56,7 @@ public class HomeFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        List<Play> playsList = Utils.getDummyPlaysList();
+        List<Play> playsList = SqlService.getAllPlays();
 
         for (Play play : playsList) {
             TextView textView = new TextView(getContext());

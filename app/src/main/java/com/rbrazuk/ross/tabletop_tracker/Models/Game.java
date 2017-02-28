@@ -1,18 +1,20 @@
 package com.rbrazuk.ross.tabletop_tracker.Models;
 
+import com.orm.SugarRecord;
+
 import java.util.List;
 
-public class Game {
+public class Game extends SugarRecord {
 
     private String mTitle;
-    private List<Play> mPlays;
+
 
     public Game() {
     }
 
-    public Game(String title, List<Play> plays) {
+    public Game(String title) {
         mTitle = title;
-        mPlays = plays;
+
     }
 
     public String getTitle() {
@@ -21,18 +23,6 @@ public class Game {
 
     public void setTitle(String title) {
         mTitle = title;
-    }
-
-    public List<Play> getPlays() {
-        return mPlays;
-    }
-
-    public void setPlays(List<Play> plays) {
-        mPlays = plays;
-    }
-
-    public int getPlayCount() {
-        return mPlays.size();
     }
 
     @Override

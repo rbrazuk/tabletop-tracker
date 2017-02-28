@@ -3,15 +3,21 @@ package com.rbrazuk.ross.tabletop_tracker.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.rbrazuk.ross.tabletop_tracker.Adapters.PlaysAdapter;
+import com.rbrazuk.ross.tabletop_tracker.Models.Play;
 import com.rbrazuk.ross.tabletop_tracker.R;
+import com.rbrazuk.ross.tabletop_tracker.Utils;
 
-/**
- * Created by Ross on 2/22/2017.
- */
+import java.util.ArrayList;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class PlaysFragment extends Fragment {
 
@@ -22,6 +28,9 @@ public class PlaysFragment extends Fragment {
 
     private String title;
     private int pageNumber;
+    private ArrayList<Play> mPlays;
+
+    @BindView(R.id.rv_plays) RecyclerView mPlaysRecyclerView;
 
     public static PlaysFragment newInstance() {
         PlaysFragment playsFragment = new PlaysFragment();
@@ -45,6 +54,17 @@ public class PlaysFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_plays, container, false);
+
+        ButterKnife.bind(this, view);
+
+        mPlays = (ArrayList<Play>) Utils.getDummyPlaysList();
+
+        PlaysAdapter adapter = new PlaysAdapter(getContext(), mPlays);
+
+        mPlaysRecyclerView.setAdapter(adapter);
+
+        mPlaysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         return view;
     }
 }

@@ -5,7 +5,7 @@ import android.os.Bundle;
 
 import com.rbrazuk.ross.tabletop_tracker.R;
 
-public class AddPlayActivity extends AppCompatActivity {
+public class AddPlayActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

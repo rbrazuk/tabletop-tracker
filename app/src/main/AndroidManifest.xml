@@ -5,6 +5,7 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:name="com.orm.SugarApp"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -16,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".Activities.AddPlayActivity">
+        </activity>
+        <activity android:name=".Activities.BaseActivity">
         </activity>
     </application>
 

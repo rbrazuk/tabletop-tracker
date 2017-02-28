@@ -1,26 +1,34 @@
 package com.rbrazuk.ross.tabletop_tracker.Activities;
 
-import android.content.Intent;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.TableLayout;
+import android.widget.Toast;
 
 import com.rbrazuk.ross.tabletop_tracker.Fragments.HomeFragment;
 import com.rbrazuk.ross.tabletop_tracker.Fragments.MyGamesFragment;
 import com.rbrazuk.ross.tabletop_tracker.Fragments.PlaysFragment;
+import com.rbrazuk.ross.tabletop_tracker.Models.Game;
+import com.rbrazuk.ross.tabletop_tracker.Models.Play;
+import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 import com.rbrazuk.ross.tabletop_tracker.R;
+import com.rbrazuk.ross.tabletop_tracker.Services.SqlService;
+import com.rbrazuk.ross.tabletop_tracker.Utils;
+
+import org.joda.time.LocalDate;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
     FragmentPagerAdapter adapterViewPager;
 
     @BindView(R.id.vp_viewpager) ViewPager mViewPager;
@@ -37,6 +45,32 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(adapterViewPager);
 
         mTabLayout.setupWithViewPager(mViewPager);
+
+
+
+        List<Player> players = new ArrayList<>(Arrays.asList(new Player[]{new Player("Ross"),
+                new Player("Erin"),
+                new Player("Tim"),
+                new Player("Christine")}));
+
+        Game game = new Game("Pandemic");
+
+        SqlService.savePlay(players, game, new LocalDate(2017, 2, 24));
+
+
+
+        //Play play = new Play(new Game("Pandemic", null), new LocalDate(2017, 2, 24), new String[] {"Ross", "Erin", "Tim", "Christine"});
+
+        //play.save();
+
+//        Play retrievedPlay = Play.findById(Play.class, 1);
+//
+//        if (Play.findById(Play.class, 55) == null) {
+//            System.out.println("Shit is null");
+//        }
+//
+//        System.out.println(retrievedPlay.toString());
+
 
     }
 
@@ -70,6 +104,12 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public CharSequence getPageTitle(int position) {
             return tabTitles[position];
+        }
+    }
+
+    public void savePlay(Game game, List<Player> players) {
+        for (Player player : players) {
+            player.save();
         }
     }
 
