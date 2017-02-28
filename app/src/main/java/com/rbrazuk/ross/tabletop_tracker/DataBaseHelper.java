@@ -2,6 +2,7 @@ package com.rbrazuk.ross.tabletop_tracker;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
@@ -15,6 +16,8 @@ import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static DataBaseHelper sInstance;
+
+    private static final String TAG =  "DataBaseHelper";
 
     private static final String DATABASE_NAME = "playsDatabase";
     private static final int DATABASE_VERSION = 1;
@@ -117,15 +120,69 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    public void addPlay(Play play) {
+    public void saveOrUpdatePlay(Play play) {
+
+        // get Game from Play object and check if it exists
+            // if it does get its ID
+            // if not, create a new Game in Games table and get ID
+
+
+        // get list of Players from Play object and loop over them
+            // for each Player:
+                // check if it exists
+                    // if it does, get ID
+                    // if not, create new Player and get ID
+                // Create row in PlayPlayers mapping table to link Player to Play
+                // Create row in GamePlayers mapping table to link Player to Game
+
+        // write date to values
+        // write game ID to values
+
+
 
     }
 
-    public void addGame(Game game) {
+    public long saveOrUpdateGame(Game game) {
+        SQLiteDatabase db = getWritableDatabase();
+        long gameId = -1;
 
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_GAME_TITLE, game.getTitle());
+
+            int rows = db.update(TABLE_GAMES, values, KEY_GAME_TITLE + "= ?", new String[]{game.getTitle()});
+
+            if (rows == 1) {
+                String gamesSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
+                        KEY_GAME_ID, TABLE_GAMES, KEY_GAME_TITLE);
+                Cursor cursor = db.rawQuery(gamesSelectQuery, new String[]{String.valueOf(game.getTitle())});
+
+                try {
+                    if (cursor.moveToFirst()) {
+                        gameId = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                } finally {
+                    if (cursor != null && !cursor.isClosed()) {
+                        cursor.close();
+                    }
+                }
+            } else {
+                gameId = db.insertOrThrow(TABLE_GAMES, null, values);
+                db.setTransactionSuccessful();
+            }
+
+        } catch (Exception e){
+            Log.d(TAG, "Error while trying to add or update Game");
+        } finally {
+            db.endTransaction();
+        }
+
+        return gameId;
     }
 
-    public void addPlayer(Player player) {
+    public void saveOrUpdatePlayer(Player player) {
         SQLiteDatabase db = getWritableDatabase();
         long playerId = -1;
 
@@ -143,5 +200,13 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    public void mapGameToPlayer(int gameId, int playerId) {
+
+    }
+
+    public void mapPlayerToPlay(int playerId, int playId) {
+
     }
 }
