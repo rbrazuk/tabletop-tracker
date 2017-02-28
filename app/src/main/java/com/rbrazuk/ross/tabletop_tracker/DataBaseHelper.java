@@ -1,10 +1,16 @@
 package com.rbrazuk.ross.tabletop_tracker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
+import android.util.Log;
+
+import com.rbrazuk.ross.tabletop_tracker.Models.Game;
+import com.rbrazuk.ross.tabletop_tracker.Models.Play;
+import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 
 public class DataBaseHelper extends SQLiteOpenHelper {
 
@@ -111,7 +117,31 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return sInstance;
     }
 
-    public void addPlay() {
+    public void addPlay(Play play) {
+
+    }
+
+    public void addGame(Game game) {
+
+    }
+
+    public void addPlayer(Player player) {
         SQLiteDatabase db = getWritableDatabase();
+        long playerId = -1;
+
+        db.beginTransaction();
+
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_PLAYER_NAME, player.getName());
+            playerId = db.insertOrThrow(TABLE_PLAYERS, null, values);
+            db.setTransactionSuccessful();
+
+
+        } catch (Exception e) {
+            Log.d("dbError", "Error while trying to post Play to database");
+        } finally {
+            db.endTransaction();
+        }
     }
 }

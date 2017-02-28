@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.rbrazuk.ross.tabletop_tracker.DataBaseHelper;
+import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 import com.rbrazuk.ross.tabletop_tracker.R;
 
 import butterknife.BindView;
@@ -46,7 +47,7 @@ public class HomeFragment extends Fragment {
 
         DataBaseHelper helper = DataBaseHelper.getInstance(getContext());
 
-        helper.addPlay();
+        helper.addPlayer(new Player("Ross Brazuk"));
 
 
     }

@@ -1,18 +1,12 @@
 package com.rbrazuk.ross.tabletop_tracker.Models;
 
-import com.orm.SugarRecord;
-import com.orm.dsl.Ignore;
-import com.rbrazuk.ross.tabletop_tracker.Models.Game;
-
-import org.joda.time.LocalDate;
-
-import java.util.Date;
 import java.util.List;
 
 public class Play {
 
     private Game mGame;
     private String mPlayDate;
+    private List<Player> mPlayers;
 
     public Play(Game game, String playDate) {
         mGame = game;
@@ -33,5 +27,13 @@ public class Play {
 
     public void setPlayDate(String playDate) {
         mPlayDate = playDate;
+    }
+
+    public List<Player> getPlayers() {
+        return mPlayers;
+    }
+
+    public void setPlayers(List<Player> players) {
+        mPlayers = players;
     }
 }
