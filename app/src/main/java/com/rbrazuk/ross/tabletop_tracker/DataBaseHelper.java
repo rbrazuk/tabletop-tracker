@@ -55,7 +55,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String CREATE_PLAYS_TABLE = "CREATE TABLE" + TABLE_PLAYS +
+        String CREATE_PLAYS_TABLE = "CREATE TABLE " + TABLE_PLAYS +
                 "(" +
                 KEY_PLAY_ID + " INTEGER PRIMARY KEY," +
                 KEY_PLAY_GAME_ID_FK + " INTEGER REFERENCES " + TABLE_GAMES + ", " +
@@ -63,25 +63,25 @@ public class DataBaseHelper extends SQLiteOpenHelper {
                 KEY_PLAY_PLAYER_COUNT + " INTEGER" +
                 ")";
 
-        String CREATE_GAMES_TABLE = "CREATE TABLE" + TABLE_GAMES +
+        String CREATE_GAMES_TABLE = "CREATE TABLE " + TABLE_GAMES +
                 "(" +
                 KEY_GAME_ID + " INTEGER PRIMARY KEY," +
                 KEY_GAME_TITLE + " TEXT" +
                 ")";
 
-        String CREATE_PLAYERS_TABLE = "CREATE TABLE" + TABLE_PLAYERS +
+        String CREATE_PLAYERS_TABLE = "CREATE TABLE " + TABLE_PLAYERS +
                 "(" +
                 KEY_PLAYER_ID + " INTEGER PRIMARY KEY," +
                 KEY_PLAYER_NAME + " TEXT" +
                 ")";
 
-        String CREATE_GAME_PLAYER_MAPPING_TABLE = "CREATE TABLE" + MAPPING_TABLE_GAME_PLAYERS +
+        String CREATE_GAME_PLAYER_MAPPING_TABLE = "CREATE TABLE " + MAPPING_TABLE_GAME_PLAYERS +
                 "(" +
                 KEY_GAMEPLAYER_GAME_ID + " INTEGER," +
                 KEY_GAMEPLAYER_PLAYER_ID + " INTEGER" +
                 ")";
 
-        String CREATE_PLAY_PLAYER_MAPPING_TABLE = "CREATE TABLE" + MAPPING_TABLE_PLAY_PLAYERS +
+        String CREATE_PLAY_PLAYER_MAPPING_TABLE = "CREATE TABLE " + MAPPING_TABLE_PLAY_PLAYERS +
                 "(" +
                 KEY_PLAY_PLAYER_PLAY_ID + " INTEGER," +
                 KEY_PLAY_PLAYER_PLAYER_ID + " INTEGER" +
@@ -109,5 +109,9 @@ public class DataBaseHelper extends SQLiteOpenHelper {
             sInstance =  new DataBaseHelper(context.getApplicationContext());
         }
         return sInstance;
+    }
+
+    public void addPlay() {
+        SQLiteDatabase db = getWritableDatabase();
     }
 }

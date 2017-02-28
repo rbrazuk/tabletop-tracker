@@ -57,14 +57,6 @@ public class PlaysFragment extends Fragment {
 
         ButterKnife.bind(this, view);
 
-        mPlays = (ArrayList<Play>) Utils.getDummyPlaysList();
-
-        PlaysAdapter adapter = new PlaysAdapter(getContext(), mPlays);
-
-        mPlaysRecyclerView.setAdapter(adapter);
-
-        mPlaysRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
         return view;
     }
 }

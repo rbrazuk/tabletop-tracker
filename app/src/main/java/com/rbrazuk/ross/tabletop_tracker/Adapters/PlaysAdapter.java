@@ -60,9 +60,9 @@ public class PlaysAdapter extends RecyclerView.Adapter<PlaysAdapter.ViewHolder> 
     public void onBindViewHolder(PlaysAdapter.ViewHolder holder, int position) {
         Play play = mPlays.get(position);
 
-        holder.mPlayGameTitle.setText(play.getGame().getTitle());
-        holder.mPlayDate.setText(play.getDate().getMonthOfYear() + "/" + play.getDate().getDayOfMonth());
-        holder.mPlayersInfo.setText(play.getNumberOfPlayers() + " players");
+//        holder.mPlayGameTitle.setText(play.getGame().getTitle());
+//        holder.mPlayDate.setText(play.getDate().getMonthOfYear() + "/" + play.getDate().getDayOfMonth());
+//        holder.mPlayersInfo.setText(play.getNumberOfPlayers() + " players");
     }
 
     @Override

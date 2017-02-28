@@ -1,5 +1,6 @@
 package com.rbrazuk.ross.tabletop_tracker.Fragments;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -7,14 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
-import com.rbrazuk.ross.tabletop_tracker.Models.Play;
+import com.rbrazuk.ross.tabletop_tracker.DataBaseHelper;
 import com.rbrazuk.ross.tabletop_tracker.R;
-import com.rbrazuk.ross.tabletop_tracker.Services.SqlService;
-import com.rbrazuk.ross.tabletop_tracker.Utils;
-
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,6 +43,12 @@ public class HomeFragment extends Fragment {
 
         title = getArguments().getString(PAGE_TITLE_KEY);
         pageNumber = getArguments().getInt(PAGE_NUMBER_KEY);
+
+        DataBaseHelper helper = DataBaseHelper.getInstance(getContext());
+
+        helper.addPlay();
+
+
     }
 
     @Nullable
@@ -55,16 +57,6 @@ public class HomeFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
         ButterKnife.bind(this, view);
-
-        List<Play> playsList = SqlService.getAllPlays();
-
-        for (Play play : playsList) {
-            TextView textView = new TextView(getContext());
-
-            textView.append(play.toString());
-
-            mPlaysContainer.addView(textView);
-        }
 
         return view;
     }
