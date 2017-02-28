@@ -4,17 +4,12 @@ import com.orm.SugarRecord;
 
 import java.util.List;
 
-public class Game extends SugarRecord {
+public class Game {
 
     private String mTitle;
 
-
-    public Game() {
-    }
-
     public Game(String title) {
         mTitle = title;
-
     }
 
     public String getTitle() {
@@ -23,10 +18,5 @@ public class Game extends SugarRecord {
 
     public void setTitle(String title) {
         mTitle = title;
-    }
-
-    @Override
-    public String toString() {
-        return this.getTitle();
     }
 }
