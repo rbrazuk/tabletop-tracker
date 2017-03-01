@@ -13,6 +13,9 @@ import com.rbrazuk.ross.tabletop_tracker.Models.Game;
 import com.rbrazuk.ross.tabletop_tracker.Models.Play;
 import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DataBaseHelper extends SQLiteOpenHelper {
 
     private static DataBaseHelper sInstance;
@@ -265,5 +268,33 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         } finally {
             db.endTransaction();
         }
+    }
+
+    public List<Game> getAllGames() {
+        List<Game> games = new ArrayList<>();
+
+        String GAMES_SELECT_QUERY = String.format("SELECT * FROM %s", TABLE_GAMES);
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(GAMES_SELECT_QUERY, null);
+
+        try {
+            if (cursor.moveToFirst()) {
+                do {
+                    Game game = new Game(cursor.getString(cursor.getColumnIndex(KEY_GAME_TITLE)));
+                    games.add(game);
+                } while (cursor.moveToNext());
+            }
+
+        } catch (Exception e) {
+            Log.d(TAG, "Error reading Games from database");
+        } finally {
+            if (cursor != null && !cursor.isClosed()) {
+                cursor.close();
+            }
+        }
+
+        return games;
     }
 }

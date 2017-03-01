@@ -3,6 +3,7 @@ package com.rbrazuk.ross.tabletop_tracker.Fragments;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,20 +53,19 @@ public class HomeFragment extends Fragment {
 
         DataBaseHelper helper = DataBaseHelper.getInstance(getContext());
 
+//        Game gloom = new Game("Gloom");
+//        Game hanabi = new Game("Hanabi");
+//        Game elderSign = new Game("Elder Sign");
+//        Game arboretum = new Game("Arboretum");
+//
+//        helper.saveOrUpdateGame(gloom);
+//        helper.saveOrUpdateGame(hanabi);
+//        helper.saveOrUpdateGame(elderSign);
+//        helper.saveOrUpdateGame(arboretum);
 
-
-        List<Player> playersList = new ArrayList<>();
-        playersList.add(new Player("Ross"));
-        playersList.add(new Player("Erin"));
-        playersList.add(new Player("Christine"));
-        playersList.add(new Player("Tim"));
-
-        Play play = new Play(new Game("Boss Monster"), "20170215");
-        play.setPlayers(playersList);
-
-        helper.saveOrUpdatePlay(play);
-
-
+        for (Game game: helper.getAllGames()) {
+            Log.d("GAME", game.getTitle());
+        }
     }
 
     @Nullable
