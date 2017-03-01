@@ -9,8 +9,14 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.rbrazuk.ross.tabletop_tracker.DataBaseHelper;
+import com.rbrazuk.ross.tabletop_tracker.Models.Game;
+import com.rbrazuk.ross.tabletop_tracker.Models.Play;
 import com.rbrazuk.ross.tabletop_tracker.Models.Player;
 import com.rbrazuk.ross.tabletop_tracker.R;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,7 +52,18 @@ public class HomeFragment extends Fragment {
 
         DataBaseHelper helper = DataBaseHelper.getInstance(getContext());
 
-        helper.saveOrUpdatePlayer(new Player("Ross Brazuk"));
+
+
+        List<Player> playersList = new ArrayList<>();
+        playersList.add(new Player("Ross"));
+        playersList.add(new Player("Erin"));
+        playersList.add(new Player("Christine"));
+        playersList.add(new Player("Tim"));
+
+        Play play = new Play(new Game("Boss Monster"), "20170215");
+        play.setPlayers(playersList);
+
+        helper.saveOrUpdatePlay(play);
 
 
     }

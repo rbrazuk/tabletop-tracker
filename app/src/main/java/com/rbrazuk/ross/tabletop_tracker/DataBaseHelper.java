@@ -122,24 +122,32 @@ public class DataBaseHelper extends SQLiteOpenHelper {
 
     public void saveOrUpdatePlay(Play play) {
 
-        // get Game from Play object and check if it exists
-            // if it does get its ID
-            // if not, create a new Game in Games table and get ID
+        SQLiteDatabase db = getWritableDatabase();
 
+        long gameId = saveOrUpdateGame(play.getGame());
+        long playId = -1;
 
-        // get list of Players from Play object and loop over them
-            // for each Player:
-                // check if it exists
-                    // if it does, get ID
-                    // if not, create new Player and get ID
-                // Create row in PlayPlayers mapping table to link Player to Play
-                // Create row in GamePlayers mapping table to link Player to Game
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_PLAY_GAME_ID_FK, gameId);
+            values.put(KEY_PLAY_DATE, play.getPlayDate());
 
-        // write date to values
-        // write game ID to values
+            playId = db.insertOrThrow(TABLE_PLAYS, null, values);
 
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while saving Play");
+        } finally {
+            db.endTransaction();
+        }
 
+        for (Player player: play.getPlayers()) {
+            long playerId = saveOrUpdatePlayer(player);
 
+            mapGameToPlayer(gameId, playerId);
+            mapPlayerToPlay(playerId, playId);
+        }
     }
 
     public long saveOrUpdateGame(Game game) {
@@ -182,7 +190,7 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         return gameId;
     }
 
-    public void saveOrUpdatePlayer(Player player) {
+    public long saveOrUpdatePlayer(Player player) {
         SQLiteDatabase db = getWritableDatabase();
         long playerId = -1;
 
@@ -191,22 +199,71 @@ public class DataBaseHelper extends SQLiteOpenHelper {
         try {
             ContentValues values = new ContentValues();
             values.put(KEY_PLAYER_NAME, player.getName());
-            playerId = db.insertOrThrow(TABLE_PLAYERS, null, values);
-            db.setTransactionSuccessful();
 
+            int rows = db.update(TABLE_PLAYERS, values, KEY_PLAYER_NAME + "= ?", new String[]{player.getName()});
 
+            if (rows == 1) {
+                String playerSelectQuery = String.format("SELECT %s FROM %s WHERE %s = ?",
+                        KEY_PLAYER_ID, TABLE_PLAYERS, KEY_PLAYER_NAME);
+                Cursor cursor = db.rawQuery(playerSelectQuery, new String[]{String.valueOf(player.getName())});
+
+                try {
+                    if (cursor.moveToFirst()) {
+                        playerId = cursor.getInt(0);
+                        db.setTransactionSuccessful();
+                    }
+                } finally {
+                    if (cursor != null && !cursor.isClosed()) {
+                        cursor.close();
+                    }
+                }
+            } else {
+                playerId = db.insertOrThrow(TABLE_PLAYERS, null, values);
+                db.setTransactionSuccessful();
+            }
         } catch (Exception e) {
-            Log.d("dbError", "Error while trying to post Play to database");
+            Log.d(TAG, "Error while trying to add or update Player");
         } finally {
             db.endTransaction();
         }
+
+        return playerId;
     }
 
-    public void mapGameToPlayer(int gameId, int playerId) {
+    public void mapGameToPlayer(long gameId, long playerId) {
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_GAMEPLAYER_GAME_ID, gameId);
+            values.put(KEY_GAMEPLAYER_PLAYER_ID, playerId);
+
+            db.insertOrThrow(MAPPING_TABLE_GAME_PLAYERS, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while mapping Game to Player");
+        } finally {
+            db.endTransaction();
+        }
 
     }
 
-    public void mapPlayerToPlay(int playerId, int playId) {
+    public void mapPlayerToPlay(long playerId, long playId) {
+        SQLiteDatabase db = getWritableDatabase();
 
+        db.beginTransaction();
+        try {
+            ContentValues values = new ContentValues();
+            values.put(KEY_PLAY_PLAYER_PLAYER_ID, playerId);
+            values.put(KEY_PLAY_PLAYER_PLAY_ID, playId);
+
+            db.insertOrThrow(MAPPING_TABLE_PLAY_PLAYERS, null, values);
+            db.setTransactionSuccessful();
+        } catch (Exception e) {
+            Log.d(TAG, "Error while mapping Play to Player");
+        } finally {
+            db.endTransaction();
+        }
     }
 }
